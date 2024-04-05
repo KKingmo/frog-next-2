@@ -106,8 +106,8 @@ app.frame("/start", async (c) => {
   }
 
   if (!buttonValue || buttonValue === "more") {
-    const result = await neynarClient.fetchUserFollowing(myFid, {
-      viewerFid: myFid,
+    const result = await neynarClient.fetchUserFollowing(iFid, {
+      viewerFid: iFid,
       limit: 150,
       ...(nextCursor && { cursor: nextCursor }),
     })
