@@ -113,30 +113,29 @@ app.frame("/start", async (c) => {
     })
 
     const users: Array<FollowResponseUser & userType> = result.result.users
-    if (users.length === 0) {
-      return c.res(renderFail("The end."))
-    }
-
     nextCursor = result.result.next.cursor
-    filteredUsers = users
-      .filter(({ powerBadge, viewerContext, fid }) =>
-        viewerContext
-          ? !viewerContext.followedBy && !powerBadge && fid !== myFid
-          : false
-      )
-      .map((user) => ({
-        fid: user.fid,
-        username: user.username,
-        displayName: user.displayName,
-        pfp: user.pfp,
-      }))
 
-    chunkedFilteredUsers = [
-      ...chunkedFilteredUsers,
-      ...(filteredUsers.length > 0
-        ? [...chunkArray(filteredUsers, chunkSize)]
-        : []),
-    ]
+    if (users.length > 0) {
+      filteredUsers = users
+        .filter(({ powerBadge, viewerContext, fid }) =>
+          viewerContext
+            ? !viewerContext.followedBy && !powerBadge && fid !== myFid
+            : false
+        )
+        .map((user) => ({
+          fid: user.fid,
+          username: user.username,
+          displayName: user.displayName,
+          pfp: user.pfp,
+        }))
+
+      chunkedFilteredUsers = [
+        ...chunkedFilteredUsers,
+        ...(filteredUsers.length > 0
+          ? [...chunkArray(filteredUsers, chunkSize)]
+          : []),
+      ]
+    }
   }
 
   const state = deriveState((previousState) => {
@@ -157,7 +156,7 @@ app.frame("/start", async (c) => {
           </Text>
           <VStack gap="2" alignVertical={"center"}>
             {chunkedFilteredUsers[state.pageNumber].length === 0
-              ? "Nobody 😢"
+              ? "Nobody 😢Press More"
               : chunkedFilteredUsers[state.pageNumber].map((item, i) => (
                   <HStack gap={"2"} key={item.fid}>
                     <Image
