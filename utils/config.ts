@@ -8,7 +8,6 @@ export const paths = {
 }
 
 export const siteMetadata = {
-  title: "Reaction Hall of Fame",
-  description:
-    "Enter a cast URL, and I'll show you users who have liked, recast, and tipped 🎩$DEGEN it.",
+  title: "F4F checker",
+  description: "Find users who don't follow me back.",
 }

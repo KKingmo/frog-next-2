@@ -28,7 +28,7 @@ export class Env {
   public static get MY_FID(): string {
     const MY_FID = process.env.MY_FID
     if (!MY_FID) {
-      throw new Error("MY_FID is not defined")
+      return "398897"
     }
     return MY_FID
   }

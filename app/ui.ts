@@ -25,6 +25,7 @@ export const {
     green: theme.colors.green,
     red: theme.colors.red,
     orange: theme.colors.orange,
+    fname: theme.colors.fname,
   },
   fonts: {
     default: [
