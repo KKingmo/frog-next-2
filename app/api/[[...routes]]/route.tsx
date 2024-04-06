@@ -57,13 +57,12 @@ app.frame("/", (c) => {
             </VStack>
           </VStack>
           <VStack gap="4">
-            <Text>Requirements</Text>
-            <Text>1. follow @m-o</Text>
+            <Text>If you like it, please follow @m-o 😉</Text>
           </VStack>
         </Box>
       </SquareContainer>
     ),
-    intents: [<Button action="/start">follow @m-o 👉 Start</Button>],
+    intents: [<Button action="/start">Start</Button>],
   })
 })
 
@@ -97,13 +96,6 @@ app.frame("/start", async (c) => {
   const { interactor, cast } = cVar
   const iFid = interactor?.fid || 0
   const myFid = Number(Env.MY_FID) || 0
-
-  const viewContext = interactor?.viewerContext
-  const isFollowing = viewContext ? viewContext.following : false
-
-  if (!isFollowing && !DEV_MODE && iFid !== myFid) {
-    return c.res(renderFail("Please follow @m-o"))
-  }
 
   if (!buttonValue || buttonValue === "more") {
     const result = await neynarClient.fetchUserFollowing(iFid, {
@@ -195,20 +187,6 @@ app.frame("/start", async (c) => {
 devtools(app, { serveStatic })
 export const GET = handle(app)
 export const POST = handle(app)
-
-/** 실패화면 */
-const renderFail = (phrase: string) => {
-  return {
-    image: (
-      <SquareContainer>
-        <Box grow borderRadius="8" justifyContent="center" gap="16">
-          <Text size={"20"}>{phrase}</Text>
-        </Box>
-      </SquareContainer>
-    ),
-    intents: [<Button action={"/"}>Reset</Button>],
-  }
-}
 
 interface SquareContainerProps {
   children: React.ReactNode
